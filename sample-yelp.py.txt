@@ -1,0 +1,144 @@
+from selenium import webdriver
+import urllib.request
+import selenium.webdriver.chrome.service as service
+ptions = webdriver.ChromeOptions()
+#options.add_argument('--ignore-certificate-errors')
+#options.add_argument("--test-type")
+import pprint
+from flask import request
+from selenium import webdriver
+from selenium import webdriver
+import time
+import random
+from flask import request
+from selenium import webdriver
+from selenium import webdriver 
+from selenium.webdriver.common.by import By 
+from selenium.webdriver.support.ui import WebDriverWait 
+from selenium.webdriver.support import expected_conditions as EC 
+from selenium.common.exceptions import TimeoutException
+import pprint
+import time
+from bs4 import BeautifulSoup
+import selenium.webdriver.chrome.service as service
+import sys
+import re
+import os
+import fileinput
+import requests
+from pandas import DataFrame
+import csv
+import requests
+
+
+try:
+    
+    city_name="Los Angeles"
+    url= "https://www.yelp.com/search?find_desc=Architects+and+Designers&find_loc=Los+Angeles%2C+CA&ns=1"
+    categoies="Architects and Designers"
+    #browser = webdriver.Chrome('C:\\chromedriver.exe')
+    #browser.get(url)
+    l_block_title=[]
+    l_block_review=[]
+    l_block_description=[]
+    l_block_image_tag=[]
+    l_block_mobile=[]
+    l_block_location=[]
+    #l_block_title=[]
+    l_block_review=[]
+    l_block=[]
+    l_address=[]
+    l_neighborhoods=[]
+    PROXY = "206.189.222.146:8080" # IP:PORT or HOST:PORT
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("test-type")
+    chrome_options.add_argument("--js-flags=--expose-gc")
+    chrome_options.add_argument("--enable-precise-memory-info")
+    chrome_options.add_argument("--disable-infobars")
+    chrome_options.add_argument("--disable-popup-blocking")
+    chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--disable-default-apps")
+    chrome_options.add_argument('--proxy-server=http://%s' % PROXY)
+    caps = chrome_options.to_capabilities()
+    chrome = webdriver.Chrome(chrome_options=chrome_options,executable_path='C:\\chromedriver.exe',desired_capabilities=caps)
+    #url="http://sachin:DMuKW5qd@houzz.in"
+    #chrome.get(url)
+    #main_url="https://www.houzz.in/professionals/architects/"
+    chrome.get(url)
+    time.sleep(2)
+    """find_desc = chrome.find_element_by_id('find_desc')
+    find_desc.send_keys(categoies)
+    location = chrome.find_element_by_id('dropperText_Mast')
+    location.send_keys(categoies)"""
+    full_blocks=chrome.find_elements_by_css_selector('li.regular-search-result')
+    Block_titles=chrome.find_elements_by_xpath("//a[@data-analytics-label='biz-name']")
+    block_reviews=chrome.find_elements_by_css_selector('span.review-count')
+    block_neighborhoods=chrome.find_elements_by_css_selector('span.neighborhood-str-list')
+    block_addresses=chrome.find_elements_by_css_selector('div.secondary-attributes')
+    block_decs=chrome.find_elements_by_css_selector('p.snippet')
+    main_images=chrome.find_elements_by_css_selector('img.photo-box-img')
+    for full_block in full_blocks:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_block.append(full_block.text)
+        
+    for full_block in Block_titles:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_block_title.append(full_block.text)
+        
+    for full_block in block_reviews:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_block_review.append(full_block.text)
+        
+    for full_block in block_neighborhoods:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_neighborhoods.append(full_block.text)
+        
+    for full_block in block_addresses:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_address.append(full_block.text)
+        
+    for full_block in block_decs:
+        if(full_block==""):
+                full_block="None"
+        print (full_block.text)
+        l_block_description.append(full_block.text)
+
+    for full_block in main_images:
+        if(full_block==""):
+                full_block="None"
+        block_ind=full_block.get_attribute("src")
+        print (block_ind)
+        l_block_image_tag.append(block_ind)
+    
+    
+    #chrome.get("https://www.google.com")
+    
+   
+
+    
+    
+
+    try:
+        df = DataFrame({'Title': l_block_title, 'review': l_block_review,'block_neighborhoods': l_neighborhoods,'block_addresses': l_address,'block_decs': l_block_description,'main_images': l_block_image_tag})
+        df
+
+        df.to_excel('yelp.xlsx', sheet_name='sheet1', index=False)
+    except (ValueError) as e:
+        print (e)
+
+
+    
+
+except Exception as e:
+    print (e)
